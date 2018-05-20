@@ -30,6 +30,7 @@ function zip(callback) {
 
     let path = `${destDir}\\${newFileName()}.zip`;
     let output = fs.createWriteStream(path);
+    let input = fs.createReadStream(dest);
     let archive = archiver('zip', {
         zlib: {
             level: 9 // Sets the compression level.
@@ -46,7 +47,7 @@ function zip(callback) {
     });
 
     archive.pipe(output);
-    archive.append(fs.createReadStream(dest), {
+    archive.append(input, {
         name: fileName
     });
     archive.finalize();
