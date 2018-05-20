@@ -76,5 +76,6 @@ function newFileName() {
         (cb) => remove(cb)
     ], (err) => {
         !err ? console.log('All done!') : console.error(err);
+        process.exit(0);
     });
 })();
