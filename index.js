@@ -22,11 +22,11 @@ function copy(callback) {
             console.log('File copy successful!');
         }
         callback(err);
-    })
+    });
 }
 
 function zip(callback) {
-    console.log('Zipping copied file')
+    console.log('Zipping copied file');
 
     let path = `${destDir}\\${newFileName()}.zip`;
     let output = fs.createWriteStream(path);
