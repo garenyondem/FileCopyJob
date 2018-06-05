@@ -1,0 +1,9 @@
+# FileCopyJob
+Copies source file to destination directory and archives it.
+
+Supported runtime is Node.js v6.4 and above.
+
+### Usage
+```
+node index /Users/garenyondem/desktop/preciousFile.txt /Users/garenyondem/BackupFolder
+```
