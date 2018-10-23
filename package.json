@@ -14,6 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "archiver": "^2.1.1",
-    "async": "^2.6.0"
+    "async": "^2.6.0",
+    "encryptor": "gist:bdf42b9a3fe3f09929d36fe959ed8e37"
   }
 }
