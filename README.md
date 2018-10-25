@@ -9,5 +9,5 @@ npm install
 ```
 then
 ```
-node index /Users/garenyondem/desktop/preciousFile.txt /Users/garenyondem/BackupFolder
+node index "/Users/garenyondem/desktop/preciousFile.txt" "/Users/garenyondem/BackupFolder"
 ```
