@@ -1,7 +1,7 @@
 # FileCopyJob
 Copies source file to destination directory and archives it.
 
-Supported runtime is Node.js v6.4 and above.
+Supported runtime is Node.js v8.12.0 and above.
 
 ### Usage
 ```
