@@ -1,23 +1,28 @@
 'use strict';
 
-let fileName = '',
-    source = '',
-    dest = '';
-
 const sourceFilePath = process.argv[2],
-    destDir = process.argv[3];
+    destinationDirectory = process.argv[3];
 
 const fs = require('fs'),
+    os = require('os'),
     archiver = require('archiver');
 
-function extractFileName(sourceFilePath) {
-    fileName = sourceFilePath.split('\\').pop();
-    dest = destDir + '\\' + fileName;
+let fileSeparator = getFileSeparator(),
+    fileName = sourceFilePath.split(fileSeparator).pop(),
+    destination = destinationDirectory + fileSeparator + fileName,
+    source = '';
+
+function getFileSeparator() {
+    switch (os.platform()) {
+        case 'win32': return '\\';
+        case 'darwin': case 'linux': return '/';
+        default: process.exit();
+    }
 }
 
 async function copy() {
     return new Promise((resolve, reject) => {
-        fs.copyFile(sourceFilePath, dest, (err) => {
+        fs.copyFile(sourceFilePath, destination, (err) => {
             if (!err) {
                 console.log('File copy successful!');
                 return resolve();
@@ -30,14 +35,13 @@ async function copy() {
 async function zip() {
     return new Promise((resolve, reject) => {
         console.log('Zipping copied file');
-
-        let path = `${destDir}\\${newFileName()}.zip`;
+        let path = destinationDirectory + fileSeparator + newFileName() + '.zip';
         let output = fs.createWriteStream(path);
-        let input = fs.createReadStream(dest);
+        let input = fs.createReadStream(destination);
         let archive = archiver('zip', {
             zlib: {
                 level: 9, // Sets the compression level.
-            },
+            }
         });
 
         function listener(err) {
@@ -66,7 +70,7 @@ async function remove() {
     return new Promise((resolve, reject) => {
         console.log('Removing leftovers');
         try {
-            fs.unlink(dest, (err) => {
+            fs.unlink(destination, (err) => {
                 !err ? resolve() : reject(err);
             });
         } catch (err) {
@@ -82,8 +86,6 @@ function newFileName() {
 }
 
 (async function init() {
-    extractFileName(sourceFilePath);
-
     try {
         await copy();
         await zip();
