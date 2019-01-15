@@ -1,4 +1,4 @@
-# FileCopyJob
+# Backup File
 Copies source file to destination directory and archives it with a date as a name.
 
 Supported runtime is Node.js v8.12.0 and above.
