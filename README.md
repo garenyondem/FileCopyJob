@@ -3,11 +3,18 @@ Copies source file to destination directory and archives it with a date as a nam
 
 Supported runtime is Node.js v8.12.0 and above.
 
-### Usage
-```
+## Usage
+```bash
 npm install
 ```
-then on mac or linux
+Then pass source and destination arguments respectively.
+
+### macOS and Linux
+
+```bash
+node index /Users/garenyondem/desktop/preciousFile.txt /Users/BackupFolder
 ```
-node index "/Users/garenyondem/desktop/preciousFile.txt" "/Users/garenyondem/BackupFolder"
+### Windows
+```bash
+node index "C:\Users\%username%\Desktop\preciousFile.txt" "E:\BackupFolder"
 ```
