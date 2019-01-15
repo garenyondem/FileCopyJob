@@ -9,8 +9,7 @@ const fs = require('fs'),
 
 let fileSeparator = getFileSeparator(),
     fileName = sourceFilePath.split(fileSeparator).pop(),
-    destination = destinationDirectory + fileSeparator + fileName,
-    source = '';
+    destination = destinationDirectory + fileSeparator + fileName;
 
 function getFileSeparator() {
     switch (os.platform()) {
