@@ -5,11 +5,16 @@ const sourceFilePath = process.argv[2],
 
 const fs = require('fs'),
     os = require('os'),
+    util = require('util'),
+    promisify = util.promisify,
     archiver = require('archiver');
 
 let fileSeparator = getFileSeparator(),
     fileName = sourceFilePath.split(fileSeparator).pop(),
     destination = destinationDirectory + fileSeparator + fileName;
+
+const copyFile = promisify(fs.copyFile),
+    unlink = promisify(fs.unlink);
 
 function getFileSeparator() {
     switch (os.platform()) {
@@ -20,15 +25,9 @@ function getFileSeparator() {
 }
 
 async function copy() {
-    return new Promise((resolve, reject) => {
-        fs.copyFile(sourceFilePath, destination, (err) => {
-            if (!err) {
-                console.log('File copy successful!');
-                return resolve();
-            }
-            reject(err);
-        });
-    });
+    await copyFile(sourceFilePath, destination);
+    console.log('File copy successful!');
+    return;
 }
 
 async function zip() {
@@ -66,16 +65,8 @@ async function zip() {
 }
 
 async function remove() {
-    return new Promise((resolve, reject) => {
-        console.log('Removing leftovers');
-        try {
-            fs.unlink(destination, (err) => {
-                !err ? resolve() : reject(err);
-            });
-        } catch (err) {
-            resolve();
-        }
-    });
+    console.log('Removing leftovers');
+    return await unlink(destination);
 }
 
 function newFileName() {
